@@ -40,7 +40,6 @@ import { getData } from '../http/api'
     })
     list.value = res.users
     count.value = res.count
-    console.log(list.value)
   }
   getValue()
   let websocket:any
