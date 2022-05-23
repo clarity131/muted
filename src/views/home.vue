@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="container">
-    <div class="count">总条数:{{count}}</div>
+    <div class="count">已有{{count}}人遭到神罚</div>
     <el-scrollbar height="900px">
         <div v-for="i in list" :key = 'i.uid' class="container_card ">
           <div class="container_card_info">
@@ -100,6 +100,7 @@ a:hover{text-decoration:underline;}
         }
         .time {
           color: rgb(175, 185, 185);
+          font-size: 12px;
         }
       }
     }
