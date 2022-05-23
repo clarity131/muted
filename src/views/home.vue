@@ -1,11 +1,11 @@
 <!--  -->
 <template>
   <div class="container">
-    <div class="count">已有{{count}}人遭到神罚</div>
+    <div class="count">已有{{count}}人遭到<div class="punish">神罚</div></div>
     <el-scrollbar height="900px">
         <div v-for="i in list" :key = 'i.uid' class="container_card ">
           <div class="container_card_info">
-            <div class="uname"><a :href="i.url" target="_blank">{{i.uname}}</a> 已被房管禁言</div>
+            <div class="uname"><a :href="i.url" target="_blank">{{i.uname}}</a>已被神罚</div>
             <div class="time">{{timestampToTime(i.ctime)}}</div>
           </div>
           <div class="bulletChat" v-for="(item, n) in i.hismsg ">
@@ -67,14 +67,24 @@ import { getData } from '../http/api'
 a {text-decoration:none;color: rgb(235, 96, 96);}
 a:hover{text-decoration:underline;}
 .container {
+  font-family: "Xingkai SC";
     height: 100%;
     display: flex;
     justify-content: center;
-    background-color: rgb(211, 201, 201);
+    background-color:black;
     align-items: center;
     flex-direction: column;
     .count {
+      font-size: 50px;
+      color: white;
       margin: 10px 0;
+    }
+    .punish{
+
+      display: flex;
+      justify-content: center;
+      color: red;
+      font-size: 60px;
     }
     .container_card {
       margin-bottom: 10px;
@@ -85,7 +95,7 @@ a:hover{text-decoration:underline;}
       margin: 10px;
       .bulletChat {
         margin-top: 10px;
-        font-size: 14px;
+        font-size: 25px;
       }
       &:hover {
         background-color: rgba(255, 255, 255, 1);
@@ -95,11 +105,21 @@ a:hover{text-decoration:underline;}
         display: flex;
         justify-content: space-between;
         .uname {
+          font-size: 30px;
         font-weight: 600;
         }
         .time {
-          color: rgb(175, 185, 185);
-          font-size: 12px;
+          color: blue;
+          font-size: 20px;
+          display:flex;
+          align-items: center;
+        }
+        .punish{
+
+          display: flex;
+          justify-content: center;
+          color: red;
+          font-size: 60px;
         }
       }
     }
@@ -107,5 +127,23 @@ a:hover{text-decoration:underline;}
   .el-scrollbar {
     height: 900px;
   }
-  
+@media screen and (max-width: 1000px){
+  .container{
+    .count {
+      font-size: 45px;
+    }
+    .container_card{
+      .container_card_info{
+        .uname{
+          font-size: 20px;
+        }
+        .time{
+          font-size: 15px;
+        }
+      }
+    }
+  }
+
+}
+
 </style>
