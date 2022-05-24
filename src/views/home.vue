@@ -44,9 +44,10 @@
   a {
     text-decoration: none;
     color: rgb(235, 96, 96);
-  }
-  a:hover {
-    text-decoration: underline;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
   .container {
     font-family: 'Xingkai SC';

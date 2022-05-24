@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     HistoryItem: typeof import('./../components/historyItem.vue')['default']
   }
 }
