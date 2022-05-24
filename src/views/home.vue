@@ -8,7 +8,7 @@
             <div class="uname"><a :href="i.url" target="_blank">{{i.uname}}</a>已被神罚</div>
             <div class="time">{{timestampToTime(i.ctime)}}</div>
           </div>
-          <div class="bulletChat" v-for="(item, n) in i.hismsg ">
+          <div class="bulletChat" v-for="item in i.hismsg ">
             {{item}}
           </div>
         </div>
@@ -48,6 +48,7 @@ import { getData } from '../http/api'
     //接收服务端消息
     websocket.onmessage = (res:{data:string}) => {
       list.value.unshift(JSON.parse(res.data))
+      count.value++
     }
   }
   connect()
