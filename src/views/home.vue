@@ -6,26 +6,17 @@
       <div class="punish">神罚</div>
     </div>
     <el-scrollbar height="900px">
-      <div v-for="user in users" :key="user.uid" class="container_card">
-        <div class="container_card_info">
-          <div class="uname">
-            <a :href="user.url" target="_blank">{{ user.uname }}</a
-            >已被神罚
-          </div>
-          <div class="time">{{ timestampToTime(user.ctime) }}</div>
-        </div>
-        <div class="bulletChat" v-for="(item, n) in user.hismsg">
-          {{ item }}
-        </div>
-      </div>
+      <HistoryItem v-for="user in users" :key="user.uid" :data="user" />
     </el-scrollbar>
   </div>
 </template>
 
 <script lang="ts" setup>
+  import HistoryItem from '../components/historyItem.vue'
+
   import { IResponse } from '@/types'
-  import { reactive, toRefs, ref } from 'vue'
   import { getData } from '../http/api'
+
   const { users, count } = toRefs(
     reactive<IResponse['data']>({
       users: [],
@@ -34,14 +25,11 @@
   )
   const getValue = async () => {
     const { data: res } = await getData()
-    res.users.forEach((item) => {
-      item.url = 'https://space.bilibili.com/' + item.uid
-    })
     users.value = res.users
     count.value = res.count
   }
   getValue()
-  let websocket: any
+  let websocket: WebSocket
   function connect() {
     websocket = new WebSocket('ws://43.128.42.48:2800/ban/ws')
     //接收服务端消息
@@ -50,24 +38,9 @@
     }
   }
   connect()
-  function timestampToTime(timestamp: number) {
-    var date = new Date(timestamp * 1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    var Y = date.getFullYear() + '-'
-    var M =
-      (date.getMonth() + 1 < 10
-        ? '0' + (date.getMonth() + 1)
-        : date.getMonth() + 1) + '-'
-    var D = date.getDate() + ' '
-    var h = date.getHours() + ':'
-    var m =
-      date.getMinutes() < 10
-        ? '0' + date.getMinutes() + ':'
-        : date.getMinutes() + ':'
-    var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
-    return Y + M + D + h + m + s
-  }
 </script>
-<style scoped lang="less">
+
+<style lang="less">
   a {
     text-decoration: none;
     color: rgb(235, 96, 96);
