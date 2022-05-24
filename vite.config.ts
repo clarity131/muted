@@ -8,12 +8,19 @@ export default defineConfig({
     vue(),
     AutoImport({
       imports: ['vue', '@vueuse/core'],
-      dts: './src/types/auto-import.ts'
+      dts: './src/types/auto-import.d.ts'
     })
   ],
   resolve: {
     alias: [
       { find: '@', replacement: './src' },
     ]
+  },
+  build: {
+    cssCodeSplit: false,
+    minify: 'terser'
+  },
+  define: {
+    __VUE_OPTIONS_API__: false // optimize Vue Options API
   }
 })
