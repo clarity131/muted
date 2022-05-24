@@ -9,5 +9,11 @@ export default defineConfig({
     AutoImport({
       imports: ['vue', '@vueuse/core'],
       dts: './src/types/auto-import.ts'
-    })]
+    })
+  ],
+  resolve: {
+    alias: [
+      { find: '@', replacement: './src' },
+    ]
+  }
 })
