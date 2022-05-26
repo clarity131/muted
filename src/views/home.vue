@@ -34,7 +34,10 @@
     websocket = new WebSocket('ws://43.128.42.48:2800/ban/ws')
     //接收服务端消息
     websocket.onmessage = (res: { data: string }) => {
-      users.value.unshift(JSON.parse(res.data))
+      const data = JSON.parse(res.data)
+      data.url = 'https://space.bilibili.com/' + data.uid
+      users.value.unshift(data)
+      count.value++
     }
   }
   connect()
