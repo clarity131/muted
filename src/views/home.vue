@@ -1,4 +1,3 @@
-<!--  -->
 <template>
   <div class="container">
     <div class="count">
@@ -12,9 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-  import HistoryItem from '../components/historyItem.vue'
-
-  import { IResponse } from '@/types'
+  import { IResponse, User } from '@/types'
   import { getData } from '../http/api'
 
   const { users, count } = toRefs(
@@ -29,16 +26,16 @@
     count.value = res.count
   }
   getValue()
-  let websocket: WebSocket
-  function connect() {
-    websocket = new WebSocket('ws://43.128.42.48:2800/ban/ws')
-    //接收服务端消息
-    websocket.onmessage = (res: { data: string }) => {
-      users.value.unshift(JSON.parse(res.data))
+
+  const hostname = window.location.hostname
+  useWebSocket(`wss://${hostname}/ban/ws`, {
+    onMessage(_, event) {
+      const data = JSON.parse(event.data) as User
+      users.value = [data, ...users.value]
       count.value++
-    }
-  }
-  connect()
+    },
+    autoReconnect: true
+  })
 </script>
 
 <style lang="less">
